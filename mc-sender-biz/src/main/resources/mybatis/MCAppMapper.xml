@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codi.mc.sender.api.domain.MCApp">
+  <resultMap id="BaseResultMap" type="com.codi.mc.sender.api.domain.MCApp">
+    <id column="app_code" jdbcType="VARCHAR" property="appCode" />
+    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    <result column="app_state" jdbcType="INTEGER" property="appState" />
+    <result column="sms_channel_id" jdbcType="INTEGER" property="smsChannelId" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_userid" jdbcType="VARCHAR" property="createUserid" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_userid" jdbcType="VARCHAR" property="updateUserid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    app_code, app_name, app_state, sms_channel_id, is_deleted, create_date, create_userid,
+    update_date, update_userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from mc_app
+    where app_code = #{appCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mc_app
+    where app_code = #{appCode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.codi.mc.sender.api.domain.MCApp">
+    insert into mc_app (app_code, app_name, app_state,
+      sms_channel_id, is_deleted, create_date,
+      create_userid, update_date, update_userid
+      )
+    values (#{appCode,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, #{appState,jdbcType=INTEGER},
+      #{smsChannelId,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP},
+      #{createUserid,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{updateUserid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.codi.mc.sender.api.domain.MCApp">
+    insert into mc_app
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="appCode != null">
+        app_code,
+      </if>
+      <if test="appName != null">
+        app_name,
+      </if>
+      <if test="appState != null">
+        app_state,
+      </if>
+      <if test="smsChannelId != null">
+        sms_channel_id,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createUserid != null">
+        create_userid,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updateUserid != null">
+        update_userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="appCode != null">
+        #{appCode,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null">
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appState != null">
+        #{appState,jdbcType=INTEGER},
+      </if>
+      <if test="smsChannelId != null">
+        #{smsChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null">
+        #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null">
+        #{updateUserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.codi.mc.sender.api.domain.MCApp">
+    update mc_app
+    <set>
+      <if test="appName != null">
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appState != null">
+        app_state = #{appState,jdbcType=INTEGER},
+      </if>
+      <if test="smsChannelId != null">
+        sms_channel_id = #{smsChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null">
+        create_userid = #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null">
+        update_userid = #{updateUserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where app_code = #{appCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.codi.mc.sender.api.domain.MCApp">
+    update mc_app
+    set app_name = #{appName,jdbcType=VARCHAR},
+      app_state = #{appState,jdbcType=INTEGER},
+      sms_channel_id = #{smsChannelId,jdbcType=INTEGER},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_userid = #{createUserid,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_userid = #{updateUserid,jdbcType=VARCHAR}
+    where app_code = #{appCode,jdbcType=VARCHAR}
+  </update>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from mc_app
+        where app_state=1 and is_deleted=0
+    </select>
+</mapper>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codi.mc.sender.api.domain.SMSMessage">
+  <resultMap id="BaseResultMap" type="com.codi.mc.sender.api.domain.SMSMessage">
+    <id column="message_id" jdbcType="BIGINT" property="messageId" />
+    <result column="template_id" jdbcType="INTEGER" property="templateId" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="send_plan" jdbcType="INTEGER" property="sendPlan" />
+    <result column="send_status" jdbcType="INTEGER" property="sendStatus" />
+    <result column="fail_reason" jdbcType="VARCHAR" property="failReason" />
+    <result column="plan_time" jdbcType="TIMESTAMP" property="planTime" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="local_requestid" jdbcType="VARCHAR" property="localRequestid" />
+    <result column="external_requestid" jdbcType="VARCHAR" property="externalRequestid" />
+    <result column="request_ip" jdbcType="VARCHAR" property="requestIp" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_userid" jdbcType="VARCHAR" property="createUserid" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_userid" jdbcType="VARCHAR" property="updateUserid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    message_id, template_id, mobile, content, send_plan, send_status, fail_reason, plan_time,
+    is_deleted, local_requestid, external_requestid, request_ip, create_date, create_userid,
+    update_date, update_userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sms_message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sms_message
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.codi.mc.sender.api.domain.SMSMessage">
+    insert into sms_message (message_id, template_id, mobile,
+      content, send_plan, send_status,
+      fail_reason, plan_time, is_deleted,
+      local_requestid, external_requestid, request_ip,
+      create_date, create_userid, update_date,
+      update_userid)
+    values (#{messageId,jdbcType=BIGINT}, #{templateId,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR},
+      #{content,jdbcType=VARCHAR}, #{sendPlan,jdbcType=INTEGER}, #{sendStatus,jdbcType=INTEGER},
+      #{failReason,jdbcType=VARCHAR}, #{planTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT},
+      #{localRequestid,jdbcType=VARCHAR}, #{externalRequestid,jdbcType=VARCHAR}, #{requestIp,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{createUserid,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{updateUserid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.codi.mc.sender.api.domain.SMSMessage">
+    insert into sms_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        message_id,
+      </if>
+      <if test="templateId != null">
+        template_id,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="sendPlan != null">
+        send_plan,
+      </if>
+      <if test="sendStatus != null">
+        send_status,
+      </if>
+      <if test="failReason != null">
+        fail_reason,
+      </if>
+      <if test="planTime != null">
+        plan_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="localRequestid != null">
+        local_requestid,
+      </if>
+      <if test="externalRequestid != null">
+        external_requestid,
+      </if>
+      <if test="requestIp != null">
+        request_ip,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createUserid != null">
+        create_userid,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updateUserid != null">
+        update_userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        #{messageId,jdbcType=BIGINT},
+      </if>
+      <if test="templateId != null">
+        #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPlan != null">
+        #{sendPlan,jdbcType=INTEGER},
+      </if>
+      <if test="sendStatus != null">
+        #{sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="failReason != null">
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="planTime != null">
+        #{planTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="localRequestid != null">
+        #{localRequestid,jdbcType=VARCHAR},
+      </if>
+      <if test="externalRequestid != null">
+        #{externalRequestid,jdbcType=VARCHAR},
+      </if>
+      <if test="requestIp != null">
+        #{requestIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null">
+        #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null">
+        #{updateUserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.codi.mc.sender.api.domain.SMSMessage">
+    update sms_message
+    <set>
+      <if test="templateId != null">
+        template_id = #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="sendPlan != null">
+        send_plan = #{sendPlan,jdbcType=INTEGER},
+      </if>
+      <if test="sendStatus != null">
+        send_status = #{sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="failReason != null">
+        fail_reason = #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="planTime != null">
+        plan_time = #{planTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="localRequestid != null">
+        local_requestid = #{localRequestid,jdbcType=VARCHAR},
+      </if>
+      <if test="externalRequestid != null">
+        external_requestid = #{externalRequestid,jdbcType=VARCHAR},
+      </if>
+      <if test="requestIp != null">
+        request_ip = #{requestIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null">
+        create_userid = #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null">
+        update_userid = #{updateUserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.codi.mc.sender.api.domain.SMSMessage">
+    update sms_message
+    set template_id = #{templateId,jdbcType=INTEGER},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      send_plan = #{sendPlan,jdbcType=INTEGER},
+      send_status = #{sendStatus,jdbcType=INTEGER},
+      fail_reason = #{failReason,jdbcType=VARCHAR},
+      plan_time = #{planTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      local_requestid = #{localRequestid,jdbcType=VARCHAR},
+      external_requestid = #{externalRequestid,jdbcType=VARCHAR},
+      request_ip = #{requestIp,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_userid = #{createUserid,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_userid = #{updateUserid,jdbcType=VARCHAR}
+    where message_id = #{messageId,jdbcType=BIGINT}
+  </update>
+    <select id="queryUnsentMessages" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sms_message
+        where send_status=0 and is_deleted=0
+    </select>
+    <update id="updateState" parameterType="com.codi.mc.sender.api.domain.SMSMessage">
+        update sms_message
+        <set>
+            <if test="sendStatus != null">
+                send_status = #{sendStatus,jdbcType=INTEGER},
+            </if>
+            <if test="failReason != null">
+                fail_reason = #{failReason,jdbcType=VARCHAR},
+            </if>
+            <if test="externalRequestid != null">
+                external_requestid = #{externalRequestid,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUserid != null">
+                update_userid = #{updateUserid,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where message_id = #{messageId,jdbcType=BIGINT}
+    </update>
+</mapper>

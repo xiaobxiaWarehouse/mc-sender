@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+    PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator/config.properties"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3">
+
+        <!-- 继承BaseDomain -->
+        <plugin type="com.codi.base.mybatis.generator.plugins.BaseDomainPlugin">
+            <property name="addGWTInterface" value="true"/>
+        </plugin>
+
+        <!-- 将UserMapper改名为UserDao 接口 -->
+        <plugin type="com.codi.base.mybatis.generator.plugins.rename.RenameJavaMapperPlugin">
+            <property name="searchString" value="Mapper$"/>
+            <property name="replaceString" value="Dao"/>
+        </plugin>
+
+        <plugin type="com.codi.base.mybatis.generator.plugins.BaseDaoPlugin"/>
+
+        <!-- 自定义注释 -->
+        <commentGenerator type="com.codi.base.mybatis.generator.plugins.comment.CustomCommentGenerator">
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="${db.url}" userId="${db.username}"
+                        password="${db.password}">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="${model.package}" targetProject="${model.path}">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="${sqlmap.package}" targetProject="${sqlmap.path}">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${dao.package}" targetProject="${dao.path}">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <!-- 表模型 -->
+        <!--<table schema="codi_portal" tableName="mc_app" domainObjectName="MCApp"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="codi_portal" tableName="sms_message" domainObjectName="SMSMessage"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+        <table schema="codi_portal" tableName="sms_template" domainObjectName="SMSTemplate"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>-->
+        <table schema="codi_portal" tableName="sms_channel" domainObjectName="SMSChannel"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="false"/>
+        </table>
+
+    </context>
+</generatorConfiguration>

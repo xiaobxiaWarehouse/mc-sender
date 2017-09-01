@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.codi.mc.sender.api.domain.SMSChannel" >
+  <resultMap id="BaseResultMap" type="com.codi.mc.sender.api.domain.SMSChannel" >
+    <id column="sms_channel_id" property="smsChannelId" jdbcType="INTEGER" />
+    <result column="channel_code" property="channelCode" jdbcType="VARCHAR" />
+    <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+    <result column="channel_config" property="channelConfig" jdbcType="VARCHAR" />
+    <result column="channel_state" property="channelState" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="create_userid" property="createUserid" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_userid" property="updateUserid" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sms_channel_id, channel_code, channel_name, channel_config, channel_state, is_deleted,
+    create_userid, create_date, update_userid, update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from sms_channel
+    where sms_channel_id = #{smsChannelId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sms_channel
+    where sms_channel_id = #{smsChannelId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.codi.mc.sender.api.domain.SMSChannel" >
+    insert into sms_channel (sms_channel_id, channel_code, channel_name,
+      channel_config, channel_state, is_deleted,
+      create_userid, create_date, update_userid,
+      update_date)
+    values (#{smsChannelId,jdbcType=INTEGER}, #{channelCode,jdbcType=VARCHAR}, #{channelName,jdbcType=VARCHAR},
+      #{channelConfig,jdbcType=VARCHAR}, #{channelState,jdbcType=INTEGER}, #{isDeleted,jdbcType=BIT},
+      #{createUserid,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateUserid,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.codi.mc.sender.api.domain.SMSChannel" >
+    insert into sms_channel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smsChannelId != null" >
+        sms_channel_id,
+      </if>
+      <if test="channelCode != null" >
+        channel_code,
+      </if>
+      <if test="channelName != null" >
+        channel_name,
+      </if>
+      <if test="channelConfig != null" >
+        channel_config,
+      </if>
+      <if test="channelState != null" >
+        channel_state,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="createUserid != null" >
+        create_userid,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateUserid != null" >
+        update_userid,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smsChannelId != null" >
+        #{smsChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null" >
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelConfig != null" >
+        #{channelConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="channelState != null" >
+        #{channelState,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createUserid != null" >
+        #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null" >
+        #{updateUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.codi.mc.sender.api.domain.SMSChannel" >
+    update sms_channel
+    <set >
+      <if test="channelCode != null" >
+        channel_code = #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null" >
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelConfig != null" >
+        channel_config = #{channelConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="channelState != null" >
+        channel_state = #{channelState,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createUserid != null" >
+        create_userid = #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null" >
+        update_userid = #{updateUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sms_channel_id = #{smsChannelId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.codi.mc.sender.api.domain.SMSChannel" >
+    update sms_channel
+    set channel_code = #{channelCode,jdbcType=VARCHAR},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      channel_config = #{channelConfig,jdbcType=VARCHAR},
+      channel_state = #{channelState,jdbcType=INTEGER},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      create_userid = #{createUserid,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_userid = #{updateUserid,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where sms_channel_id = #{smsChannelId,jdbcType=INTEGER}
+  </update>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sms_channel
+        where channel_state=1 and is_deleted=0
+    </select>
+</mapper>

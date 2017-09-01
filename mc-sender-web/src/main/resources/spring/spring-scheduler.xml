@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" destroy-method="destroy">
+
+        <property name="configLocation" value="classpath:quartz.properties"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="schedulerName" value="CODI_QUARTZ_SCHEDULER"/>
+        <property name="overwriteExistingJobs" value="true"/>
+
+        <property name="autoStartup" value="true"/>
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+        <property name="jobFactory" ref="codiJobFactory"></property>
+
+        <property name="waitForJobsToCompleteOnShutdown" value="false"/>
+        <property name="triggers">
+            <list>
+                <!-- 仅用于线下测试，线上需要关闭 -->
+                <!--<ref bean="redisLockSMSJobTrigger"/>-->
+               <ref bean="smsJobTrigger"/>
+            </list>
+        </property>
+
+        <property name="jobDetails">
+            <list>
+                <!-- 只定义不触发，需人工触发 -->
+            </list>
+        </property>
+
+        <property name="globalJobListeners">
+            <list>
+                <ref bean="GlobalJobListener"/>
+            </list>
+        </property>
+
+        <property name="globalTriggerListeners">
+            <list>
+                <ref bean="GlobalTriggerListener"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="GlobalJobListener" class="com.codi.mc.sender.web.job.listener.GlobalJobListener"/>
+    <bean id="GlobalTriggerListener" class="com.codi.mc.sender.web.job.listener.GlobalTriggerListener"/>
+
+    <!-- 导入所有JOB -->
+    <import resource="classpath:spring/jobs/sms_job.xml"/>
+
+</beans>

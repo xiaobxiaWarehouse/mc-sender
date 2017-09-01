@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.codi</groupId>
+        <artifactId>mc-sender</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mc-sender-biz</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.codi</groupId>
+            <artifactId>mc-sender-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.codi</groupId>
+            <artifactId>mc-sender-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.codi</groupId>
+            <artifactId>superman-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>2.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-sms</artifactId>
+            <version>3.0.0-rc1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.codi.base.mybatis.generator</groupId>
+            <artifactId>mybatis-generator-plugins</artifactId>
+            <version>${mybatis.generator.plugin.verion}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <resources>
+                        <resource>
+                            <directory>src/main/resources</directory>
+                            <excludes>
+                                <exclude>generator/</exclude>
+                            </excludes>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>generate-mybatis</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-maven-plugin</artifactId>
+                        <version>1.3.2</version>
+                        <configuration>
+                            <configurationFile>
+                                src/main/resources/generator/generatorConfig.xml
+                            </configurationFile>
+                            <overwrite>false</overwrite>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>mybatis-generator</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>mysql</groupId>
+                                <artifactId>mysql-connector-java</artifactId>
+                                <version>${mysql.connector.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>com.codi.base.mybatis.generator</groupId>
+                                <artifactId>mybatis-generator-plugins</artifactId>
+                                <version>${mybatis.generator.plugin.verion}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

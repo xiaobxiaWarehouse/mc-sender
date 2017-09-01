@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codi.mc.sender.api.domain.SMSTemplate">
+  <resultMap id="BaseResultMap" type="com.codi.mc.sender.api.domain.SMSTemplate">
+    <id column="template_id" jdbcType="INTEGER" property="templateId" />
+    <result column="app_code" jdbcType="VARCHAR" property="appCode" />
+    <result column="template_code" jdbcType="VARCHAR" property="templateCode" />
+    <result column="external_template_code" jdbcType="VARCHAR" property="externalTemplateCode" />
+    <result column="template_name" jdbcType="VARCHAR" property="templateName" />
+    <result column="template_content" jdbcType="VARCHAR" property="templateContent" />
+    <result column="template_state" jdbcType="INTEGER" property="templateState" />
+    <result column="sms_type" jdbcType="INTEGER" property="smsType" />
+    <result column="sms_channel_id" jdbcType="INTEGER" property="smsChannelId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_userid" jdbcType="VARCHAR" property="createUserid" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_userid" jdbcType="VARCHAR" property="updateUserid" />
+    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="sms_sign_name" jdbcType="VARCHAR" property="smsSignName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    template_id, app_code, template_code, external_template_code, template_name, template_content,
+    template_state, sms_type, sms_channel_id, create_date, create_userid, update_date,
+    update_userid, is_deleted, sms_sign_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sms_template
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sms_template
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.codi.mc.sender.api.domain.SMSTemplate">
+    insert into sms_template (template_id, app_code, template_code,
+      external_template_code, template_name, template_content,
+      template_state, sms_type, sms_channel_id,
+      create_date, create_userid, update_date,
+      update_userid, is_deleted, sms_sign_name
+      )
+    values (#{templateId,jdbcType=INTEGER}, #{appCode,jdbcType=VARCHAR}, #{templateCode,jdbcType=VARCHAR},
+      #{externalTemplateCode,jdbcType=VARCHAR}, #{templateName,jdbcType=VARCHAR}, #{templateContent,jdbcType=VARCHAR},
+      #{templateState,jdbcType=INTEGER}, #{smsType,jdbcType=INTEGER}, #{smsChannelId,jdbcType=INTEGER},
+      #{createDate,jdbcType=TIMESTAMP}, #{createUserid,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{updateUserid,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}, #{smsSignName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.codi.mc.sender.api.domain.SMSTemplate">
+    insert into sms_template
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="templateId != null">
+        template_id,
+      </if>
+      <if test="appCode != null">
+        app_code,
+      </if>
+      <if test="templateCode != null">
+        template_code,
+      </if>
+      <if test="externalTemplateCode != null">
+        external_template_code,
+      </if>
+      <if test="templateName != null">
+        template_name,
+      </if>
+      <if test="templateContent != null">
+        template_content,
+      </if>
+      <if test="templateState != null">
+        template_state,
+      </if>
+      <if test="smsType != null">
+        sms_type,
+      </if>
+      <if test="smsChannelId != null">
+        sms_channel_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createUserid != null">
+        create_userid,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updateUserid != null">
+        update_userid,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="smsSignName != null">
+        sms_sign_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="templateId != null">
+        #{templateId,jdbcType=INTEGER},
+      </if>
+      <if test="appCode != null">
+        #{appCode,jdbcType=VARCHAR},
+      </if>
+      <if test="templateCode != null">
+        #{templateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="externalTemplateCode != null">
+        #{externalTemplateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="templateName != null">
+        #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="templateContent != null">
+        #{templateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="templateState != null">
+        #{templateState,jdbcType=INTEGER},
+      </if>
+      <if test="smsType != null">
+        #{smsType,jdbcType=INTEGER},
+      </if>
+      <if test="smsChannelId != null">
+        #{smsChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null">
+        #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null">
+        #{updateUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="smsSignName != null">
+        #{smsSignName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.codi.mc.sender.api.domain.SMSTemplate">
+    update sms_template
+    <set>
+      <if test="appCode != null">
+        app_code = #{appCode,jdbcType=VARCHAR},
+      </if>
+      <if test="templateCode != null">
+        template_code = #{templateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="externalTemplateCode != null">
+        external_template_code = #{externalTemplateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="templateName != null">
+        template_name = #{templateName,jdbcType=VARCHAR},
+      </if>
+      <if test="templateContent != null">
+        template_content = #{templateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="templateState != null">
+        template_state = #{templateState,jdbcType=INTEGER},
+      </if>
+      <if test="smsType != null">
+        sms_type = #{smsType,jdbcType=INTEGER},
+      </if>
+      <if test="smsChannelId != null">
+        sms_channel_id = #{smsChannelId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserid != null">
+        create_userid = #{createUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserid != null">
+        update_userid = #{updateUserid,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="smsSignName != null">
+        sms_sign_name = #{smsSignName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.codi.mc.sender.api.domain.SMSTemplate">
+    update sms_template
+    set app_code = #{appCode,jdbcType=VARCHAR},
+      template_code = #{templateCode,jdbcType=VARCHAR},
+      external_template_code = #{externalTemplateCode,jdbcType=VARCHAR},
+      template_name = #{templateName,jdbcType=VARCHAR},
+      template_content = #{templateContent,jdbcType=VARCHAR},
+      template_state = #{templateState,jdbcType=INTEGER},
+      sms_type = #{smsType,jdbcType=INTEGER},
+      sms_channel_id = #{smsChannelId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_userid = #{createUserid,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_userid = #{updateUserid,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      sms_sign_name = #{smsSignName,jdbcType=VARCHAR}
+    where template_id = #{templateId,jdbcType=INTEGER}
+  </update>
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sms_template
+        where template_state=1 and is_deleted=0
+    </select>
+</mapper>

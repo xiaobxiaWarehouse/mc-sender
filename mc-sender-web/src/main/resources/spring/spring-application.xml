@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:property-placeholder location="classpath:spring/config.properties" ignore-unresolvable="true"/>
+
+    <context:component-scan base-package="com.codi.superman,com.codi">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <bean id="validator" class="com.codi.base.validation.ValidatorFactoryBean"/>
+
+    <bean id="validatorAdapter" class="com.codi.base.validation.CodiSpringValidatorAdapter">
+        <constructor-arg type="javax.validation.Validator" ref="validator"/>
+    </bean>
+
+    <!-- 启动对@AspectJ注解的支持 -->
+    <aop:aspectj-autoproxy/>
+
+
+    <bean id="dataSourceCodi" class="com.codi.base.dataSource.CodiDataSource" init-method="init" destroy-method="close">
+        <constructor-arg type="java.lang.String" value=""/>
+    </bean>
+
+
+    <bean id="pagePlugin" class="com.codi.base.dao.plugin.page.PagePlugin">
+        <property name="properties">
+            <props>
+                <prop key="dialect">mysql</prop>
+                <prop key="pageSqlId">.*query.*</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="${SPRING_MYBATIS_TYPE_ALIASES_PACKAGE}"/>
+        <property name="mapperLocations" value="${SPRING_MYBATIS_MAPPER_LOCATIONS}"/>
+        <property name="plugins">
+            <array>
+                <ref bean="pagePlugin"/>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.codi.base.dataSource.DynamicDataSource">
+        <property name="defaultTargetDataSource" ref="dataSourceCodi"/>
+        <property name="targetDataSources">
+            <map>
+                <entry key="DATA_SOURCE_CODI" value-ref="dataSourceCodi"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- redis begin -->
+    <bean id="redisConnectionFactory" class="com.codi.base.cache.RedisConnectionFactory"/>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="redisConnectionFactory"/>
+        <property name="defaultSerializer">
+            <!-- 使用简单的字符串序列化 -->
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <!-- 序列化对象 -->
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer"/>
+        </property>
+    </bean>
+    <!-- redis end -->
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <!-- 用于持有ApplicationContext,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring bean对象 -->
+    <bean class="com.codi.base.spring.SpringContextHolder" lazy-init="false"/>
+    <!--job factory, 用于把Spring对象注入到Quartz-->
+    <bean id="codiJobFactory" class="com.codi.base.spring.CodiJobFactory"></bean>
+
+    <!--spring session-->
+    <bean class="org.springframework.session.web.http.DefaultCookieSerializer">
+        <property name="cookieName" value="JSESSIONID"/>
+        <!--<property name="cookiePath" value="/"/>-->
+        <!-- <property name="domainName" value="example.com"></property> -->
+        <!--<property name="domainNamePattern" value="^.+?\.(\w+\.[a-z]+)$"/>-->
+    </bean>
+    <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
+
+    <import resource="./spring-mvc-security.xml"/>
+    <import resource="classpath:spring/spring-scheduler.xml"/>
+</beans>
